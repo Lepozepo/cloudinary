@@ -1,0 +1,15 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "cloudinary": {
+        "path": "../.."
+      }
+    },
+    "packages": {
+      "cloudinary": {
+        "path": "../.."
+      }
+    }
+  }
+}

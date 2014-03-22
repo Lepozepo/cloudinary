@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "cloudinary": {
+      "version": "1.0.8",
+      "dependencies": {
+        "coffee-script": {
+          "version": "1.4.0"
+        },
+        "underscore": {
+          "version": "1.4.4"
+        }
+      }
+    }
+  }
+}
