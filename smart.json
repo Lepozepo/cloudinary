@@ -1,0 +1,9 @@
+{
+	"name": "cloudinary",
+	"description": "Cloudinary Uploader",
+	"homepage": "https://github.com/Lepozepo/cloudinary",
+	"author": "Lepozepo <lepozepo@gmail.com>",
+	"version": "1.0.0",
+	"git": "https://github.com/Lepozepo/cloudinary.git",
+	"packages": {}
+}
