@@ -22,5 +22,8 @@ Meteor.methods({
 		} else {
 			console.log("Cloudinary Error: Helper Block needs a callback function to run");
 		}
+	},
+	cloudinary_delete:function(public_id){
+		Cloudinary.api.delete_resources([public_id]);
 	}
 });
