@@ -15,7 +15,18 @@ Template.cloudinary_upload.events({
 			var reader = new FileReader;
 
 			reader.onload = function () {
-				Meteor.call("cloudinary_upload",reader.result,options);
+				Meteor.call("cloudinary_upload",reader.result,options,function(e,r){
+					if(!e && r && !_.has(r,"error")){
+						Session.set("cloudinary_upload.upload_successful",r);
+						Session.set("cloudinary_upload.upload_failed",false);
+					} else if (!e && r && _.has(r,"error")){
+						Session.set("cloudinary_upload.upload_successful",false);
+						Session.set("cloudinary_upload.upload_failed",r);
+					} else {
+						Session.set("cloudinary_upload.upload_successful",false);
+						Session.set("cloudinary_upload.upload_failed",e);
+					}
+				});
 			};
 
 			reader.readAsDataURL(file);

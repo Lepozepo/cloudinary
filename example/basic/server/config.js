@@ -1,5 +1,5 @@
 Cloudinary.config({
-	cloud_name: 'tester',
-	api_key: '794347634547276',
-	api_secret: '-zfTFvSYREA756DZDKVs67yO2HI'
+	cloud_name: 'cloud_name',
+	api_key: '1237419',
+	api_secret: 'asdf24adsfjk'
 });

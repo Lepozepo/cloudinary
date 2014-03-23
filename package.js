@@ -9,7 +9,7 @@ Npm.depends({
 Package.on_use(function (api){
 	//Need service-configuration to use Meteor.method
 	api.use(["underscore", "ejson","service-configuration"], ["client", "server"]);
-	api.use(["ui","templating"], "client");
+	api.use(["ui","templating","spacebars"], "client");
 
 	//Image manipulation
 	api.add_files("lib/cloudinary.standalone.js","client");

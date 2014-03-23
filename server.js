@@ -18,6 +18,7 @@ Meteor.methods({
 					upload_data:upload_data
 				}
 				Meteor.call(options.callback,callback_options);
+				return future.wait();
 			}
 		} else {
 			console.log("Cloudinary Error: Helper Block needs a callback function to run");
@@ -36,7 +37,7 @@ Meteor.methods({
 			if(result && _.has(result,"resources")){
 				future.return(result.resources);
 			} else {
-				future.return(false);
+				future.return([]);
 			}
 		});
 

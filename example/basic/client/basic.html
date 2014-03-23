@@ -10,6 +10,14 @@
 	{{#with stuff}}
 		{{#cloudinary_upload callback="save_url"}}
 			<input type="file">
+
+			{{#if c_upload_successful}}
+				<p>Success</p>
+			{{/if}}
+
+			{{#if c_upload_failed}}
+				<p>Failed</p>
+			{{/if}}
 		{{/cloudinary_upload}}
 	{{/with}}
 
