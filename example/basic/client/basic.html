@@ -7,6 +7,8 @@
 </body>
 
 <template name="tester">
+	{{c_image "hyurkzolo4cb71ridr6b.jpg" width="170"}}
+
 	{{#with stuff}}
 		{{#cloudinary_upload callback="save_url"}}
 			<input type="file">

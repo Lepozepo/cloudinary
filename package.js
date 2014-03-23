@@ -10,7 +10,12 @@ Package.on_use(function (api){
 	//Need service-configuration to use Meteor.method
 	api.use(["underscore", "ejson","service-configuration"], ["client", "server"]);
 	api.use(["ui","templating"], "client");
+
+	//Image manipulation
+	api.add_files("lib/cloudinary.standalone.js","client");
+
 	api.add_files("client/blocks.html", "client");
+	api.add_files("client/helpers.js", "client");
 	api.add_files("client/controllers.js","client");
 	api.add_files("server.js", "server");
 
