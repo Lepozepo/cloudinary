@@ -64,6 +64,15 @@ You can manipulate an image by adding parameters to the helper
 
 ```
 
+## How to delete from Cloudinary
+Just pass the public_id of the image or file through this function (security features pending)
+
+``` javascript
+Meteor.call("cloudinary_delete","public_id");
+
+```
+
+
 Here are all the transformations you can apply:
 [http://cloudinary.com/documentation/image_transformations#reference](http://cloudinary.com/documentation/image_transformations#reference)
 
