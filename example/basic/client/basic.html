@@ -23,6 +23,6 @@
 
 	{{#each image_list}}
 		<br>
-		{{c_image public_id format=format width="150"}}
+		<img width="250" src="{{c_url public_id format=format effect='blur:300' angle=10}}">
 	{{/each}}
 </template>
