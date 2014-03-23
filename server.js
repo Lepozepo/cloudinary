@@ -24,6 +24,22 @@ Meteor.methods({
 		}
 	},
 	cloudinary_delete:function(public_id){
+		//This isn't very safe, lol
+		this.unblock();
 		Cloudinary.api.delete_resources([public_id]);
+	},
+	cloudinary_list_all:function(){
+		this.unblock();
+		var future = new Future();
+
+		Cloudinary.api.resources(function(result){
+			if(result && _.has(result,"resources")){
+				future.return(result.resources);
+			} else {
+				future.return(false);
+			}
+		});
+
+		return future.wait();
 	}
 });
