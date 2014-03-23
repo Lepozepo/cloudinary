@@ -3,7 +3,7 @@
 	"description": "Cloudinary Uploader",
 	"homepage": "https://github.com/Lepozepo/cloudinary",
 	"author": "Lepozepo <lepozepo@gmail.com>",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"git": "https://github.com/Lepozepo/cloudinary.git",
 	"packages": {}
 }
