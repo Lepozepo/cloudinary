@@ -7,7 +7,9 @@
 </body>
 
 <template name="tester">
-	{{#cloudinary}}
-		<input type="file">
-	{{/cloudinary}}
+	{{#with stuff}}
+		{{#cloudinary_upload callback="save_url"}}
+			<input type="file">
+		{{/cloudinary_upload}}
+	{{/with}}
 </template>

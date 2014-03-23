@@ -6,7 +6,7 @@ Npm.depends({
 	cloudinary: "1.0.8"
 });
 
-Package.on_use(function (api) {
+Package.on_use(function (api){
 	//Need service-configuration to use Meteor.method
 	api.use(["underscore", "ejson","service-configuration"], ["client", "server"]);
 	api.use(["ui","templating"], "client");
