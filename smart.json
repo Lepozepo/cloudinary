@@ -3,7 +3,7 @@
 	"description": "Cloudinary Image Uploader. This package replaces the S3 package and works only on blaze. Adds image manipulation on-demand and image upload.",
 	"homepage": "https://github.com/Lepozepo/cloudinary",
 	"author": "Lepozepo <lepozepo@gmail.com>",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"git": "https://github.com/Lepozepo/cloudinary.git",
 	"packages": {}
 }
