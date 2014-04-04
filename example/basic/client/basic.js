@@ -16,3 +16,13 @@ Template.tester.helpers({
 		return Session.get("image_list");
 	}
 });
+
+Template.tester.events({
+	"click .delete":function(){
+		Meteor.call("cloudinary_delete",this.public_id,function(e,r){
+			if(!e){
+				console.log(r);
+			}
+		});
+	}
+});

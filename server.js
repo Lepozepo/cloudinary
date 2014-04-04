@@ -27,7 +27,14 @@ Meteor.methods({
 	cloudinary_delete:function(public_id){
 		//This isn't very safe, lol
 		this.unblock();
-		Cloudinary.api.delete_resources([public_id]);
+
+		var future = new Future();
+
+		Cloudinary.api.delete_resources([public_id],function(result){
+			future.return(result);
+		});
+
+		return future.wait();
 	},
 	cloudinary_list_all:function(){
 		this.unblock();
