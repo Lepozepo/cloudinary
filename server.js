@@ -15,83 +15,86 @@ Meteor.methods({
 			var future = new Future();
 
 			Cloudinary.uploader.upload(file,function(result){
+				if(result && !result.error) {
+					_.extend(result,{total_uploaded:result.bytes,percent_uploaded:1});
+
+					_cloudinary_stream.emit("upload",result,options);
+				}
+
 				future.return(result);
 			});
 
-			if(future.wait()){
-				upload_data = future.wait();
+			if(future.wait() && !future.wait().error){
 				var callback_options = {
 					context:options.context,
-					upload_data:upload_data
+					upload_data:future.wait()
 				}
 				Meteor.call(options.callback,callback_options);
+
 				return future.wait();
+			} else {
+				throw new Meteor.Error("Cloudinary Error",future.wait().error);
 			}
 		} else {
-			console.log("Cloudinary Error: Helper Block needs a callback function to run");
+			throw new Meteor.Error("Cloudinary Error","cloudinary_upload does not have a callback!");
 		}
 	},
 	cloudinary_upload_stream:function(file,options){
 		this.unblock();
 
-		var file_stream_buffer = new stream_buffers.ReadableStreamBuffer({
-			frequency:10,
-			chunkSize:2048
-		});
-
-		var buffer = new Buffer(file);
-		file_stream_buffer.put(buffer);
-
-		var future = new Future();
-		var stream = Cloudinary.uploader.upload_stream(function(result){
-			_.extend(result,{total_uploaded:result.bytes,percent_uploaded:1});
-
-			_cloudinary_stream.emit("upload",result,options);
-
-			future.return(result);
-		});
-
-		total_buffer_size = buffer.length;
-		total_uploaded = 0;
-
-		file_stream_buffer.on("data",function(data){
-			total_uploaded += data.length;
-			percent_uploaded = Number((total_uploaded / total_buffer_size).toFixed(2));
-
-			var upload_stats = {
-				total_uploaded: total_uploaded,
-				percent_uploaded: percent_uploaded
-			}
-
-			_cloudinary_stream.emit("upload",upload_stats,options);
-
-			stream.write(data);
-		});
-
-		file_stream_buffer.on("end",stream.end);
-
-		return future.wait();
-/*
 		if(options && _.has(options,"callback")){
+			var file_stream_buffer = new stream_buffers.ReadableStreamBuffer({
+				frequency:10,
+				chunkSize:2048
+			});
+	
+			var buffer = new Buffer(file);
+			file_stream_buffer.put(buffer);
+	
 			var future = new Future();
+			var stream = Cloudinary.uploader.upload_stream(function(result){
+				if(result && !result.error) {
+					_.extend(result,{total_uploaded:result.bytes,percent_uploaded:1});
 
-			Cloudinary.uploader.upload(file,function(result){
+					_cloudinary_stream.emit("upload",result,options);
+				}
+
 				future.return(result);
 			});
+	
+			total_buffer_size = buffer.length;
+			total_uploaded = 0;
+	
+			file_stream_buffer.on("data",function(data){
+				total_uploaded += data.length;
+				percent_uploaded = Number((total_uploaded / total_buffer_size).toFixed(2));
+	
+				var upload_stats = {
+					total_uploaded: total_uploaded,
+					percent_uploaded: percent_uploaded
+				}
+	
+				_cloudinary_stream.emit("upload",upload_stats,options);
+	
+				stream.write(data);
+			});
+	
+			file_stream_buffer.on("end",stream.end);
 
-			if(future.wait()){
-				upload_data = future.wait();
+			if(future.wait() && !future.wait().error){
 				var callback_options = {
 					context:options.context,
-					upload_data:upload_data
+					upload_data:future.wait()
 				}
 				Meteor.call(options.callback,callback_options);
+
 				return future.wait();
+			} else {
+				throw new Meteor.Error("Cloudinary Error",future.wait().error);
 			}
 		} else {
-			console.log("Cloudinary Error: Helper Block needs a callback function to run");
+			throw new Meteor.Error("Cloudinary Error","cloudinary_upload_stream does not have a callback!");
 		}
-*/
 	},
 	cloudinary_delete:function(public_id){
 		//This isn't very safe, lol
