@@ -8,7 +8,7 @@ This is a quick implementation of the uploader, feel free to fork it and improve
 ``` handlebars
 {{#cloudinary_upload}} is now {{#c_upload}}
 
-This package does not use Session variables for reactivity anymore. You can identify whether an upload is succesful via the new helper c.uploading_images (scroll for more info)
+This package does not use Session variables for reactivity anymore. You can identify whether an upload is successful via the new helper c.uploading_images or your own collection.
 
 There is a new global helper that contains all cloudinary helpers, it takes the namespace of "c". This means:
 {{c_url}} is now {{c.url}}
