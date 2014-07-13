@@ -3,7 +3,8 @@ Package.describe({
 });
 
 Npm.depends({
-	cloudinary: "1.0.8"
+	cloudinary: "1.0.8",
+	"stream-buffers":"0.2.5"
 });
 
 Package.on_use(function (api){

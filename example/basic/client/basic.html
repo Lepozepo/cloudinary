@@ -7,6 +7,7 @@
 </body>
 
 <template name="tester">
+	<h3>Cloudinary Upload</h3>
 	{{#with stuff}}
 		{{#cloudinary_upload callback="save_url"}}
 			<input type="file">
@@ -20,6 +21,11 @@
 			{{/if}}
 		{{/cloudinary_upload}}
 	{{/with}}
+
+	<h3>Cloudinary Upload Stream</h3>
+	{{#cloudinary_upload_stream}}
+			<input type="file">
+	{{/cloudinary_upload_stream}}
 
 	{{#each image_list}}
 		<br>
