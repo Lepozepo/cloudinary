@@ -4,6 +4,19 @@ This is a blaze-only package! Cloudinary provides a simple way for uploading fil
 ## Outlook
 This is a quick implementation of the uploader, feel free to fork it and improve on it like so many people did for S3 ^_^. I'm always open for pull requests too.
 
+## BREAKING CHANGES
+``` handlebars
+{{#cloudinary_upload}} is now {{#c_upload}}
+
+This package does not use Session variables for reactivity anymore. You can identify whether an upload is succesful via the new helper c.uploading_images (scroll for more info)
+
+There is a new global helper that contains all cloudinary helpers, it takes the namespace of "c". This means:
+{{c_url}} is now {{c.url}}
+```
+
+## NEW FEATURE
+You can now upload a stream of data via the c_upload_stream template and view progress via the c.uploading_images helper.
+
 ## Installation
 
 ``` sh
@@ -34,13 +47,25 @@ $.cloudinary.config({
 Create a Cloudinary input with a callback function. CLIENT SIDE.
 
 ``` handlebars
-{{#cloudinary_upload callback="save_url"}}
+{{#c_upload callback="save_url"}}
 	<input type="file">
-{{/cloudinary_upload}}
+{{/c_upload}}
+```
+
+Or a Cloudinary stream input with a callback function. CLIENT SIDE.
+
+``` handlebars
+{{#c_upload_stream callback="save_url"}}
+	<input type="file">
+{{/c_upload_stream}}
+
+{{#each c.uploading_images}}
+	<p>{{percent_uploaded}}</p>
+{{/each}}
 ```
 
 ### Step 3
-Define a callback function that will handle what to do with Cloudinary's response. SERVER SIDE.
+Define a callback function that will handle what to do with Cloudinary's response. Usually just save the url to a collection. SERVER SIDE.
 
 ``` javascript
 Meteor.methods({
@@ -51,22 +76,28 @@ Meteor.methods({
 ```
 
 ## How to read and manipulate
-All of Cloudinary's manipulation options are available in the c_url helper. You can access an image by passing a cloudinary public_id and format:
+All of Cloudinary's manipulation options are available in the c.url helper. You can access an image by passing a cloudinary public_id and format:
 
 ``` handlebars
-<img src="{{c_url public_id format=format}}">
-
+<img src="{{c.url public_id format=format}}">
 ```
 
 You can manipulate an image by adding parameters to the helper
 ``` handlebars
-<img width="250" src="{{c_url public_id format=format effect='blur:300' angle=10}}">
-
+<img width="250" src="{{c.url public_id format=format effect='blur:300' angle=10}}">
 ```
 
 Here are all the transformations you can apply:
 [http://cloudinary.com/documentation/image_transformations#reference](http://cloudinary.com/documentation/image_transformations#reference)
 
+## Data of uploading images
+Images that are being processed appear under the c.uploading_images helper. This helper only contains percent_uploaded (out of 100) and total_uploaded (in bytes).
+``` handlebars
+{{#each c.uploading_images}}
+	<p>{{percent_uploaded}}</p>
+	<p>{{total_uploaded}}</p>
+{{/each}}
+```
 
 ## How to delete from Cloudinary
 Just pass the public_id of the image or file through this function (security features pending). It will return an object with a list of the images deleted as a result.
@@ -77,10 +108,12 @@ Meteor.call("cloudinary_delete","public_id",function(e,r){
 	  	console.log(r);
 	}
 });
-
 ```
 
 
 ## Notes
 
-I'll try to use a stream instead so we can get a progress bar on this.
+This package is not intrusive on your database. It uses meteor-stream to connect to a clients' local collection and modify it. Because of this it is actually faster and more accurate with data. The local collection uses the _cloudinary namespace (so _cloudinary.find()).
+
+I still need to add more configuration options and better error handling.
+
