@@ -7,23 +7,30 @@
 </body>
 
 <template name="tester">
+	<h3>Cloudinary Upload</h3>
 	{{#with stuff}}
-		{{#cloudinary_upload callback="save_url"}}
+		{{#c_upload callback="save_url"}}
 			<input type="file">
-
-			{{#if c_upload_successful}}
-				<p>Success</p>
-			{{/if}}
-
-			{{#if c_upload_failed}}
-				<p>Failed</p>
-			{{/if}}
-		{{/cloudinary_upload}}
+		{{/c_upload}}
 	{{/with}}
 
-	{{#each image_list}}
+	<h3>Cloudinary Upload Stream</h3>
+	{{#with stuff}}
+		{{#c_upload_stream callback="save_url"}}
+				<input type="file">
+		{{/c_upload_stream}}
+	{{/with}}
+
+	{{#each c.uploading_images}}
+		<p>{{percent_uploaded}}</p>
+	{{/each}}
+
+	<h3>Saved images</h3>
+	{{#each saved_images}}
 		<br>
-		<img width="250" src="{{c_url public_id format=format effect='blur:300' angle=10}}">
+		<img width="250" src="{{secure_url}}">
+		<img width="250" src="{{c.url public_id format=format effect='blur:300' angle=10}}">
 		<button class="delete">Delete</button>
 	{{/each}}
+
 </template>

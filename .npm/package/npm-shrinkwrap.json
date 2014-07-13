@@ -10,6 +10,9 @@
           "version": "1.4.4"
         }
       }
+    },
+    "stream-buffers": {
+      "version": "0.2.5"
     }
   }
 }
