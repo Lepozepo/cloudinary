@@ -1,4 +1,4 @@
-Template.cloudinary_upload.events({
+Template.c_upload.events({
 	'change input[type=file]': function (e,helper) {
 		var options = {context:this};
 
@@ -29,7 +29,7 @@ Template.cloudinary_upload.events({
 	}
 });
 
-Template.cloudinary_upload_stream.events({
+Template.c_upload_stream.events({
 	'change input[type=file]': function (e,helper) {
 
 		var options = {context:this};

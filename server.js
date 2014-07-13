@@ -16,7 +16,7 @@ Meteor.methods({
 
 			Cloudinary.uploader.upload(file,function(result){
 				if(result && !result.error) {
-					_.extend(result,{total_uploaded:result.bytes,percent_uploaded:1});
+					_.extend(result,{total_uploaded:result.bytes,percent_uploaded:100,uploading:false});
 
 					_cloudinary_stream.emit("upload",result,options);
 				}
@@ -54,7 +54,7 @@ Meteor.methods({
 			var future = new Future();
 			var stream = Cloudinary.uploader.upload_stream(function(result){
 				if(result && !result.error) {
-					_.extend(result,{total_uploaded:result.bytes,percent_uploaded:1});
+					_.extend(result,{total_uploaded:result.bytes,percent_uploaded:100,uploading:false});
 
 					_cloudinary_stream.emit("upload",result,options);
 				}
@@ -62,16 +62,17 @@ Meteor.methods({
 				future.return(result);
 			});
 	
-			total_buffer_size = buffer.length;
-			total_uploaded = 0;
-	
+			var total_buffer_size = buffer.length;
+			var total_uploaded = 0;
+
 			file_stream_buffer.on("data",function(data){
 				total_uploaded += data.length;
-				percent_uploaded = Number((total_uploaded / total_buffer_size).toFixed(2));
-	
+				percent_uploaded = Number(((total_uploaded / total_buffer_size) * 100).toFixed(2));
+
 				var upload_stats = {
 					total_uploaded: total_uploaded,
-					percent_uploaded: percent_uploaded
+					percent_uploaded: percent_uploaded,
+					uploading:true
 				}
 	
 				_cloudinary_stream.emit("upload",upload_stats,options);
