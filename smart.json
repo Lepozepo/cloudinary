@@ -5,5 +5,7 @@
 	"author": "Lepozepo <lepozepo@gmail.com>",
 	"version": "1.0.3",
 	"git": "https://github.com/Lepozepo/cloudinary.git",
-	"packages": {}
+	"packages": {
+		"streams":{}
+	}
 }

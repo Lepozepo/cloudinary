@@ -36,9 +36,9 @@ Template.cloudinary_upload.events({
 
 Template.cloudinary_upload_stream.events({
 	'change input[type=file]': function (e,helper) {
-/*
-		var options = {context:this};
 
+		var options = {context:this};
+/*
 		if(helper.data && _.has(helper.data,"callback")){
 			options.callback = helper.data.callback;
 		} else {
@@ -54,7 +54,8 @@ Template.cloudinary_upload_stream.events({
 
 			reader.onload = function () {
 				var file_data = new Uint8Array(reader.result);
-				Meteor.call("cloudinary_upload_stream",file_data);
+				options.db_id = _cloudinary.insert({});
+				Meteor.call("cloudinary_upload_stream",file_data,options);
 			};
 
 			reader.readAsArrayBuffer(file);
