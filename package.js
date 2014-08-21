@@ -9,7 +9,7 @@ Npm.depends({
 
 Package.on_use(function (api){
 	//Need service-configuration to use Meteor.method
-	api.use(["underscore", "ejson","service-configuration","streams"], ["client", "server"]);
+	api.use(["underscore", "ejson","service-configuration","streams","collection-hooks"], ["client", "server"]);
 	api.use(["ui","templating","spacebars"], "client");
 
 	//Image manipulation
