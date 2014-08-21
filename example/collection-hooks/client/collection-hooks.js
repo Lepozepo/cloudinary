@@ -28,6 +28,15 @@ Template.tester.events({
 				console.log(r);
 			}
 		});
+	},
+	"click button.clickme":function(){
+		self = this;
+
+		var files = $("input.click_target")[0].files
+		C.upload_stream(files,function(res){
+			console.log(res);
+			console.log(self);
+		});
 	}
 });
 

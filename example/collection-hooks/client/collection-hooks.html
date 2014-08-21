@@ -19,6 +19,9 @@
 		{{#c_upload_stream}}
 				<input type="file" multiple="true">
 		{{/c_upload_stream}}
+
+		<input type="file" class="click_target" multiple="true">
+		<button class="clickme">Click me</button>
 	{{/with}}
 
 	{{#each c.uploading_images}}
@@ -32,5 +35,6 @@
 		<img width="250" src="{{c.url public_id format=format effect='blur:300' angle=10}}">
 		<button class="delete">Delete</button>
 	{{/each}}
+
 
 </template>

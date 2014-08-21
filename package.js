@@ -31,9 +31,11 @@ Package.on_use(function (api){
 	api.add_files("client/helpers.js", "client");
 	api.add_files("client/controllers.js","client");
 	api.add_files("client/collections.js", "client");
+	api.add_files("client/functions.js", "client");
 	api.add_files("server.js", "server");
 
 	//Allow user access to Cloudinary server-side
 	api.export && api.export("Cloudinary","server");
 	api.export && api.export("_cloudinary","client");
+	api.export && api.export("C","client");
 });
