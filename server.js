@@ -11,90 +11,89 @@ _cloudinary_stream.permissions.read(function(user,event) {
 Meteor.methods({
 	cloudinary_upload:function(file,options){
 		this.unblock();
-		if(options && _.has(options,"callback")){
-			var future = new Future();
 
-			Cloudinary.uploader.upload(file,function(result){
-				if(result && !result.error) {
-					_.extend(result,{total_uploaded:result.bytes,percent_uploaded:100,uploading:false});
+		var future = new Future();
 
-					_cloudinary_stream.emit("upload",result,options);
-				}
+		Cloudinary.uploader.upload(file,function(result){
+			if(result && !result.error) {
+				_.extend(result,{total_uploaded:result.bytes,percent_uploaded:100,uploading:false});
 
-				future.return(result);
-			});
-
-			if(future.wait() && !future.wait().error){
-				var callback_options = {
-					context:options.context,
-					upload_data:future.wait()
-				}
-				Meteor.call(options.callback,callback_options);
-
-				return future.wait();
-			} else {
-				throw new Meteor.Error("Cloudinary Error",future.wait().error);
+				_cloudinary_stream.emit("upload",result,options);
 			}
+
+			future.return(result);
+		});
+
+		if(future.wait() && !future.wait().error){
+			var callback_options = {
+				context:options.context,
+				upload_data:future.wait()
+			}
+
+			if(_.has(options,"callback")){
+				Meteor.call(options.callback,callback_options);
+			}
+
+			return future.wait();
 		} else {
-			throw new Meteor.Error("Cloudinary Error","cloudinary_upload does not have a callback!");
+			throw new Meteor.Error("Cloudinary Error",future.wait().error);
 		}
 	},
 	cloudinary_upload_stream:function(file,options){
 		this.unblock();
 
-		if(options && _.has(options,"callback")){
-			var file_stream_buffer = new stream_buffers.ReadableStreamBuffer({
-				frequency:10,
-				chunkSize:2048
-			});
-	
-			var buffer = new Buffer(file);
-			file_stream_buffer.put(buffer);
-	
-			var future = new Future();
-			var stream = Cloudinary.uploader.upload_stream(function(result){
-				if(result && !result.error) {
-					_.extend(result,{total_uploaded:result.bytes,percent_uploaded:100,uploading:false});
+		var file_stream_buffer = new stream_buffers.ReadableStreamBuffer({
+			frequency:10,
+			chunkSize:2048
+		});
 
-					_cloudinary_stream.emit("upload",result,options);
-				}
+		var buffer = new Buffer(file);
+		file_stream_buffer.put(buffer);
 
-				future.return(result);
-			});
-	
-			var total_buffer_size = buffer.length;
-			var total_uploaded = 0;
+		var future = new Future();
+		var stream = Cloudinary.uploader.upload_stream(function(result){
+			if(result && !result.error) {
+				_.extend(result,{total_uploaded:result.bytes,percent_uploaded:100,uploading:false});
 
-			file_stream_buffer.on("data",function(data){
-				total_uploaded += data.length;
-				percent_uploaded = Number(((total_uploaded / total_buffer_size) * 100).toFixed(2));
-
-				var upload_stats = {
-					total_uploaded: total_uploaded,
-					percent_uploaded: percent_uploaded,
-					uploading:true
-				}
-	
-				_cloudinary_stream.emit("upload",upload_stats,options);
-	
-				stream.write(data);
-			});
-	
-			file_stream_buffer.on("end",stream.end);
-
-			if(future.wait() && !future.wait().error){
-				var callback_options = {
-					context:options.context,
-					upload_data:future.wait()
-				}
-				Meteor.call(options.callback,callback_options);
-
-				return future.wait();
-			} else {
-				throw new Meteor.Error("Cloudinary Error",future.wait().error);
+				_cloudinary_stream.emit("upload",result,options);
 			}
+
+			future.return(result);
+		});
+
+		var total_buffer_size = buffer.length;
+		var total_uploaded = 0;
+
+		file_stream_buffer.on("data",function(data){
+			total_uploaded += data.length;
+			percent_uploaded = Number(((total_uploaded / total_buffer_size) * 100).toFixed(2));
+
+			var upload_stats = {
+				total_uploaded: total_uploaded,
+				percent_uploaded: percent_uploaded,
+				uploading:true
+			}
+
+			_cloudinary_stream.emit("upload",upload_stats,options);
+
+			stream.write(data);
+		});
+
+		file_stream_buffer.on("end",stream.end);
+
+		if(future.wait() && !future.wait().error){
+			var callback_options = {
+				context:options.context,
+				upload_data:future.wait()
+			}
+
+			if(_.has(options,"callback")){
+				Meteor.call(options.callback,callback_options);
+			}
+
+			return future.wait();
 		} else {
-			throw new Meteor.Error("Cloudinary Error","cloudinary_upload_stream does not have a callback!");
+			throw new Meteor.Error("Cloudinary Error",future.wait().error);
 		}
 	},
 	cloudinary_delete:function(public_id){
