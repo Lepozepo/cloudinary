@@ -1,0 +1,8 @@
+{
+  "packages": {
+    "cloudinary": {
+      "path": "../../"
+    },
+    "collection-hooks": {}
+  }
+}
