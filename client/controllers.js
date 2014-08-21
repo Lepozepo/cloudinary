@@ -4,9 +4,6 @@ Template.c_upload.events({
 
 		if(helper.data && _.has(helper.data,"callback")){
 			options.callback = helper.data.callback;
-		} else {
-			console.log("Cloudinary Error: Helper Block needs a callback function to run");
-			return
 		}
 
 		var files = e.currentTarget.files;
@@ -36,9 +33,6 @@ Template.c_upload_stream.events({
 
 		if(helper.data && _.has(helper.data,"callback")){
 			options.callback = helper.data.callback;
-		} else {
-			console.log("Cloudinary Error: Helper Block needs a callback function to run");
-			return
 		}
 
 		var files = e.currentTarget.files;
