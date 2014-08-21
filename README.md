@@ -89,6 +89,25 @@ You can manipulate an image by adding parameters to the helper
 <img width="250" src="{{c.url public_id format=format effect='blur:300' angle=10}}">
 ```
 
+## Advanced Usage
+You can use the collection-hooks package to hook up to the data stream.
+
+### Step 1
+Install collection hooks (mrt add collection-hooks)
+
+### Step 2
+Hook up to cloudinary's client-side collection (_cloudinary).
+
+``` javascript
+_cloudinary.after.update(function(user,file){
+	if(file.percent_uploaded === 100 && !file.uploading){
+		console.log(file);
+	}
+})
+```
+
+
+
 Here are all the transformations you can apply:
 [http://cloudinary.com/documentation/image_transformations#reference](http://cloudinary.com/documentation/image_transformations#reference)
 
