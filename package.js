@@ -12,9 +12,9 @@ Npm.depends({
 
 Package.on_use(function (api){
 	//Need service-configuration to use Meteor.method
-	api.use(["underscore@1.0.0", "ejson@1.0.0","service-configuration@1.0.0","lepozepo:streams"], ["client", "server"]);
+	api.use(["underscore@1.0.0", "ejson@1.0.0","service-configuration@1.0.0","lepozepo:streams@0.2.0"], ["client", "server"]);
 
-	api.use(["matb33:collection-hooks"], ["client", "server"],{weak:true});
+	api.use(["matb33:collection-hooks@0.7.3"], ["client", "server"],{weak:true});
 
 	api.use(["ui@1.0.0","templating@1.0.0","spacebars@1.0.0"], "client");
 
