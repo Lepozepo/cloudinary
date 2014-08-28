@@ -1,6 +1,5 @@
 accounts-base@1.0.0
 application-configuration@1.0.0
-arunoda:streams@0.1.1
 autopublish@1.0.0
 autoupdate@1.0.5
 binary-heap@1.0.0
@@ -22,6 +21,7 @@ insecure@1.0.0
 jquery@1.0.0
 json@1.0.0
 lepozepo:cloudinary@3.0.0
+lepozepo:streams@0.2.0
 livedata@1.0.7
 localstorage@1.0.0
 logging@1.0.2

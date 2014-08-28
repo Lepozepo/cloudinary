@@ -10,20 +10,11 @@ Npm.depends({
 	"stream-buffers":"0.2.5"
 });
 
-//Collection Hooks Support
-// function CHexists() {
-// 	var fs = Npm.require('fs');
-// 	var path = Npm.require('path');
-// 	var meteorPackages = fs.readFileSync(path.resolve('.meteor/packages'), 'utf8');
-// 	return !!meteorPackages.match(/collection-hooks\n/);
-// }
-
 Package.on_use(function (api){
 	//Need service-configuration to use Meteor.method
-	api.use(["underscore@1.0.0", "ejson@1.0.0","service-configuration@1.0.0","arunoda:streams"], ["client", "server"]);
-	// if (CHexists()) {
+	api.use(["underscore@1.0.0", "ejson@1.0.0","service-configuration@1.0.0","lepozepo:streams"], ["client", "server"]);
+
 	api.use(["matb33:collection-hooks"], ["client", "server"],{weak:true});
-	// }
 
 	api.use(["ui@1.0.0","templating@1.0.0","spacebars@1.0.0"], "client");
 
