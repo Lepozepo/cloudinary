@@ -7,5 +7,6 @@ standard-app-packages
 autopublish
 insecure
 coffeescript
-cloudinary
-collection-hooks
+lepozepo:cloudinary
+matb33:collection-hooks
+
