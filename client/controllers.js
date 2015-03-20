@@ -32,7 +32,7 @@ Template.c_upload.events({
 
 Template.c_upload_stream.events({
 	'change input[type=file]': function (e,helper) {
-console.log (helper.data.public_id)
+
 		var options = {context:this};
 
 		if(helper.data && _.has(helper.data,"callback")){
