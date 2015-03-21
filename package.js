@@ -1,5 +1,5 @@
 Package.describe({
-	name:"eugenisan:cloudinary",
+	name:"lepozepo:cloudinary",
 	summary: "Upload files to Cloudinary",
 	version:"3.0.1",
 	git:"https://github.com/Lepozepo/cloudinary"
