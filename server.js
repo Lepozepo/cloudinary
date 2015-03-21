@@ -12,6 +12,11 @@ Meteor.methods({
 	cloudinary_upload:function(file,options){
 		this.unblock();
 
+		var moreData = {};
+		
+		if (options.public_id)
+			moreData.public_id = options.public_id;
+
 		var future = new Future();
 
 		Cloudinary.uploader.upload(file,function(result){
@@ -22,7 +27,7 @@ Meteor.methods({
 			}
 
 			future.return(result);
-		});
+		},moreData);
 
 		if(future.wait() && !future.wait().error){
 			var callback_options = {
@@ -42,6 +47,11 @@ Meteor.methods({
 	cloudinary_upload_stream:function(file,options){
 		this.unblock();
 
+		var moreData = {};
+		
+		if (options.public_id)
+			moreData.public_id = options.public_id;
+
 		var file_stream_buffer = new stream_buffers.ReadableStreamBuffer({
 			frequency:10,
 			chunkSize:2048
@@ -59,7 +69,7 @@ Meteor.methods({
 			}
 
 			future.return(result);
-		});
+		},moreData);
 
 		var total_buffer_size = buffer.length;
 		var total_uploaded = 0;

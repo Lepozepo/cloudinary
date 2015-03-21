@@ -6,6 +6,10 @@ Template.c_upload.events({
 			options.callback = helper.data.callback;
 		}
 
+		if(helper.data && _.has(helper.data,"public_id")){
+			options.public_id = helper.data.public_id;
+		}
+
 		var files = e.currentTarget.files;
 
 		_.each(files,function(file){
@@ -33,6 +37,10 @@ Template.c_upload_stream.events({
 
 		if(helper.data && _.has(helper.data,"callback")){
 			options.callback = helper.data.callback;
+		}
+
+		if(helper.data && _.has(helper.data,"public_id")){
+			options.public_id = helper.data.public_id;
 		}
 
 		var files = e.currentTarget.files;
