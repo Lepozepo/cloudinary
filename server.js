@@ -10,10 +10,13 @@ _cloudinary_stream.permissions.read(function(user,event) {
 
 Meteor.methods({
 	cloudinary_upload:function(file,options){
+		check(file, String); 					// http://docs.meteor.com/#/full/check
+		check(options, Match.Any); 		// TODO: Be more specific for expected type
+
 		this.unblock();
 
 		var moreData = {};
-		
+
 		if (options.public_id)
 			moreData.public_id = options.public_id;
 
@@ -45,10 +48,18 @@ Meteor.methods({
 		}
 	},
 	cloudinary_upload_stream:function(file,options){
+		// Perform Checks on arguments as per
+		// Added Checks as a Fix for error shown on console:
+		// 		Exception while invoking method 'cloudinary_upload_stream' Error: Did
+		// 		not check() all arguments during call to 'cloudinary_upload_stream'
+
+		check(file, String);
+		check(options, Match.Any); // TODO: Be more specific for expected type
+
 		this.unblock();
 
 		var moreData = {};
-		
+
 		if (options.public_id)
 			moreData.public_id = options.public_id;
 
@@ -107,6 +118,8 @@ Meteor.methods({
 		}
 	},
 	cloudinary_delete:function(public_id){
+		check(public_id, String); // http://docs.meteor.com/#/full/check
+
 		//This isn't very safe, lol
 		this.unblock();
 
