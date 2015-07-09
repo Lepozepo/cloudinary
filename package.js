@@ -1,13 +1,12 @@
 Package.describe({
 	name:"lepozepo:cloudinary",
 	summary: "Upload files to Cloudinary",
-	version:"3.0.3",
+	version:"4.0.0",
 	git:"https://github.com/Lepozepo/cloudinary"
 });
 
 Npm.depends({
-	cloudinary: "1.0.8",
-	"stream-buffers":"0.2.5"
+	cloudinary: "1.2.1"
 });
 
 Package.on_use(function (api){
