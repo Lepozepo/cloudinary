@@ -1,7 +1,8 @@
 head
 	title basic
 
-body {{> tester}}
+body
+	+tester
 
 
 template(name="tester")
@@ -9,4 +10,5 @@ template(name="tester")
 
 	input.file_bag(type="file")
 
+	input.cloudinary-upload(type="file")
 

@@ -1,9 +1,5 @@
-# $.cloudinary.config
-# 	cloud_name:"stuff"
-
-
-Template.tester.events
-	"change input.file_bag": (e) ->
+Template.body.events
+	"change input.cloudinary-upload": (e) ->
 		files = e.currentTarget.files;
 
 		_.each files, (file) ->

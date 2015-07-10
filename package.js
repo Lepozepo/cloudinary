@@ -12,22 +12,23 @@ Npm.depends({
 Package.on_use(function (api){
 	api.versionsFrom('METEOR@1.0');
 
-	api.use(["underscore","check","coffeescript","service-configuration"], ["client", "server"]);
-	api.use(["ui@1.0.0","templating@1.0.0","spacebars@1.0.0"], "client");
-	api.use(["matb33:collection-hooks@0.7.3"], ["client", "server"],{weak:true});
+	// Core Packages
+	api.use(["underscore","coffeescript","mongo"], ["client", "server"]);
+	api.use(["templating"], "client");
 
+	// External Packages
+	api.use(["matb33:collection-hooks@0.7.3"], ["client", "server"],{weak:true});
 
 	// Cloudinary Client Side
 	// api.add_files("lib/jquery.iframe-transport.js","client"); //Compatibility for old browsers, look at this later
 	api.add_files("lib/jquery.cloudinary.js","client");
-	api.add_files("lib/jquery.ui.widget.js","client");
-	api.add_files("lib/jquery.fileupload.js","client");
 
 	// Core Files
 	api.add_files("server/configuration.coffee", "server");
 	api.add_files("server/signature.coffee", "server");
 
 	api.add_files("client/functions.coffee", "client");
+	api.add_files("client/events.coffee", "client");
 
 	api.export && api.export("Cloudinary",["server","client"]);
 
