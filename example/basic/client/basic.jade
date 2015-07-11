@@ -10,5 +10,8 @@ template(name="tester")
 
 	input.file_bag(type="file")
 
-	input.cloudinary-upload(type="file")
-
+	h5 uploaded files
+	each files
+		p {{percent_uploaded}} %
+		p {{response.public_id}}
+		button.delete Delete

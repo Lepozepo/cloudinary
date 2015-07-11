@@ -1,6 +1,6 @@
 Cloudinary.config
-	cloud_name: 'stuff'
-	api_key: 'alsdfa'
-	api_secret: ';lasdjf;a'
+	cloud_name: 'cloud'
+	api_key: 'api_key'
+	api_secret: 'api_secret'
 
 

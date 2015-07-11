@@ -28,7 +28,6 @@ Package.on_use(function (api){
 	api.add_files("server/signature.coffee", "server");
 
 	api.add_files("client/functions.coffee", "client");
-	api.add_files("client/events.coffee", "client");
 
 	api.export && api.export("Cloudinary",["server","client"]);
 

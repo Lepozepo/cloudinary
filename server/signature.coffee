@@ -1,5 +1,10 @@
 Meteor.methods
-	"c.sign": ->
+	"c.sign": (ops={}) ->
 		@unblock()
+		check ops, Object
 
-		return Cloudinary.uploader.direct_upload()
+		# Need to add some way to do custom auth
+
+		signature = Cloudinary.uploader.direct_upload "",ops
+
+		return signature
