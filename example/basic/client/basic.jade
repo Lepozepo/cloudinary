@@ -1,0 +1,19 @@
+head
+	title basic
+
+body
+	+tester
+
+
+template(name="tester")
+	h3 Cloudinary Upload
+
+	input.file_bag(type="file")
+
+	h5 uploaded files
+	each files
+		p {{percent_uploaded}} %
+		p {{response.public_id}}
+		if complete
+			img(src="{{c.url response.public_id format=response.format effect='blur:300' angle=10}}")
+		button.delete Delete
