@@ -1,29 +1,18 @@
 Cloudinary =
 	collection: new Mongo.Collection "_cloudinary", connection:null
+	_helpers:
+		"url": (public_id,options) ->
+			$.cloudinary.url(public_id,options.hash)
+
 	delete: (public_id, callback) ->
-		Meteor.call "c.sign", {}, (error,result) ->
-			url = result.form_attrs.action.replace("/upload", "/delete")
-
-			# Build form
-			# form_data = new FormData()
-			# form_data.append "api_key", result.hidden_fields.api_key
-			# form_data.append "signature",result.hidden_fields.signature
-			# form_data.append "timestamp",result.hidden_fields.timestamp
-			# form_data.append "public_id",public_id
-
-			# xhr = new XMLHttpRequest()
-
-			# xhr.open "POST",url,true
-
-			# xhr.send form_data
-
-
-			# HTTP.post url, params:ops, (err,res) ->
-			# 	console.log res
-			# 	if not err
-			# 		callback and callback null, res
-			# 	else
-			# 		callback and callback res,null
+		Meteor.call "c.delete_by_public_id", public_id, (error,result) ->
+			if error
+				return callback and callback error, null
+			else
+				if result.deleted[public_id] and result.deleted[public_id] is "not_found"
+					return callback and callback result, null
+				else
+					return callback and callback null,result
 
 	upload: (files, ops={}, callback) ->
 		_.each files, (file) ->
@@ -99,3 +88,22 @@ Cloudinary =
 				xhr.open "POST",result.form_attrs.action,true
 
 				xhr.send form_data
+
+			else
+				return callback and callback error,null
+
+
+# Define helpers
+Template.registerHelper "c", ->
+	Cloudinary._helpers
+
+
+
+
+
+
+
+
+
+
+
