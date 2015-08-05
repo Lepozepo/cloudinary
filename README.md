@@ -68,6 +68,13 @@ You can manipulate an image by adding parameters to the helper
 <img width="250" src="{{c.url public_id format=format effect='blur:300' angle=10}}">
 ```
 
+Obs: If you want to resize your image in a smaller size you will need to pass the `crop` parameter 
+``` handlebars
+<img src="{{c.url public_id width=250 height=250 crop="fill"}}">
+```
+For more information see the cloudinary's documentation:
+[http://cloudinary.com/documentation/image_transformations#crop_modes](http://cloudinary.com/documentation/image_transformations#crop_modes)
+
 ## Compatibility
 You can use the collection-hooks package to hook up to the offline collection `Cloudinary.collection`.
 
