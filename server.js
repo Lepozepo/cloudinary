@@ -126,6 +126,20 @@ Meteor.methods({
 
 		return future.wait();
 	},
+	cloudinary_delete_by_tag:function(mytag){
+		check(mytag, String);
+		
+		this.unblock();
+		
+		var future = new Future();
+		
+		Cloudinary.api.delete_resources_by_tag(mytag,function(result){
+			future.return(result);
+		});
+
+		return future.wait();
+		
+	},
 	cloudinary_list_all:function(){
 		this.unblock();
 		var future = new Future();
