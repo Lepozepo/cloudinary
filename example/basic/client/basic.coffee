@@ -1,6 +1,6 @@
 $.cloudinary.config
 	cloud_name: 'cloud_name'
-	api_key: '123123'
+	api_key: 'api_key'
 
 
 Template.tester.events
