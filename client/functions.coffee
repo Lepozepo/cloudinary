@@ -2,7 +2,8 @@ Cloudinary =
 	collection: new Mongo.Collection "_cloudinary", connection:null
 	_helpers:
 		"url": (public_id,options) ->
-			$.cloudinary.url(public_id,options.hash)
+			if public_id and not _.isEmpty public_id
+				$.cloudinary.url(public_id,options.hash)
 
 	delete: (public_id, callback) ->
 		Meteor.call "c.delete_by_public_id", public_id, (error,result) ->
