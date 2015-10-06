@@ -3,4 +3,9 @@ Cloudinary.config
 	api_key: 'api_key',
 	api_secret: 'api_secret'
 
+Cloudinary.rules.delete = ->
+	console.log @userId
+	return true
+
+
 

@@ -12,3 +12,5 @@ lepozepo:cloudinary
 mquandalle:jade
 standard-minifiers
 audit-argument-checks
+accounts-ui
+accounts-password

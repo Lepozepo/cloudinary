@@ -24,7 +24,7 @@ $ meteor add lepozepo:cloudinary
 
 ## How to upload
 ### Step 1
-Configure your Cloudinary Credentials. SERVER SIDE AND CLIENT SIDE.
+Configure your Cloudinary Credentials and Delete Authorization Rules. SERVER SIDE AND CLIENT SIDE.
 
 ``` coffeescript
 #SERVER
@@ -32,6 +32,9 @@ Cloudinary.config
 	cloud_name: 'cloud_name'
 	api_key: '1237419'
 	api_secret: 'asdf24adsfjk'
+
+Cloudinary.rules.delete = ->
+	@userId is "my_user_id" # The rule must return true to pass validation, if you do not set a rule, the validation will always pass
 
 #CLIENT
 $.cloudinary.config

@@ -14,6 +14,11 @@ Meteor.methods
 
 	"c.delete_by_public_id": (public_id) ->
 		@unblock()
+		if Cloudinary.rules.delete
+			auth_function = _.bind Cloudinary.rules.delete,this
+			if not auth_function()
+				throw new Meteor.Error "Unauthorized", "Delete not allowed"
+
 		if check
 			check public_id, String
 
