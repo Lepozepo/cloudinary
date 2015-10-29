@@ -3,8 +3,7 @@ Future = Npm.require "fibers/future"
 Meteor.methods
 	"c.sign": (ops={}) ->
 		@unblock()
-		if check
-			check ops, Object
+		check ops, Object
 
 		# Need to add some way to do custom auth and a better way to create the signature
 		signature = Cloudinary.uploader.direct_upload "",ops
@@ -19,8 +18,7 @@ Meteor.methods
 			if not auth_function()
 				throw new Meteor.Error "Unauthorized", "Delete not allowed"
 
-		if check
-			check public_id, String
+		check public_id, String
 
 		future = new Future()
 
