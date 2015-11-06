@@ -9,6 +9,7 @@ Template.tester.events
 
 		Cloudinary.upload files,
 			folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
+			faces:true
 			(err,res) -> #optional callback, you can catch with the Cloudinary collection as well
 				console.log "Upload Error:"
 				console.log err

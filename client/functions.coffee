@@ -29,14 +29,10 @@ Cloudinary =
 			if not error
 				# Build form
 				form_data = new FormData()
-				form_data.append "api_key", result.hidden_fields.api_key
-				form_data.append "signature",result.hidden_fields.signature
-				form_data.append "timestamp",result.hidden_fields.timestamp
-				form_data.append "file",file
-
-				# Enable options
-				_.each ops, (v,k) ->
+				_.each result.hidden_fields, (v,k) ->
 					form_data.append k,v
+
+				form_data.append "file",file
 
 				# Create collection document ID
 				collection_id = Random.id()

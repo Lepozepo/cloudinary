@@ -5,8 +5,9 @@ Meteor.methods
 		@unblock()
 		check ops, Object
 
-		# Need to add some way to do custom auth and a better way to create the signature
-		signature = Cloudinary.uploader.direct_upload "",ops
+		# Need to add some way to do custom auth
+		# signature = Cloudinary.utils.sign_request ops
+		signature = Cloudinary.uploader.direct_upload "",ops # This is better than utils.sign_request, it returns a POST url as well and properly manages optional parameters
 
 		return signature
 
