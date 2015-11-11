@@ -12,7 +12,7 @@ Meteor.methods
 		return signature
 
 
-	"c.delete_by_public_id": (public_id) ->
+	"c.delete_by_public_id": (public_id,type) ->
 		@unblock()
 		if Cloudinary.rules.delete
 			auth_function = _.bind Cloudinary.rules.delete,this
@@ -20,11 +20,24 @@ Meteor.methods
 				throw new Meteor.Error "Unauthorized", "Delete not allowed"
 
 		check public_id, String
+		check type, Match.OneOf(String,undefined,null)
+		if type
+			ops =
+				type:type
 
 		future = new Future()
 
 		Cloudinary.api.delete_resources [public_id], (result) ->
-			future.return result
+				future.return result
+			,ops
 
 		return future.wait()
+
+	"c.get_private_resource": (public_id,ops={}) ->
+		@unblock()
+		_.extend ops,
+			sign_url:true
+			type:"private"
+
+		Cloudinary.url public_id,ops
 
