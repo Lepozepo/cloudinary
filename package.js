@@ -1,12 +1,12 @@
 Package.describe({
 	name:"lepozepo:cloudinary",
 	summary: "Upload files to Cloudinary",
-	version:"4.0.4",
+	version:"4.0.5",
 	git:"https://github.com/Lepozepo/cloudinary"
 });
 
 Npm.depends({
-	cloudinary: "1.2.4"
+	cloudinary: "1.2.5"
 });
 
 Package.on_use(function (api){
@@ -15,7 +15,7 @@ Package.on_use(function (api){
 	// Core Packages
 	api.use(["meteor-base","coffeescript","mongo"], ["client", "server"]);
 	api.use(["templating"], "client");
-	api.use(["check","random"], ["client","server"]);
+	api.use(["check","random","reactive-var"], ["client","server"]);
 
 	// External Packages
 	api.use(["matb33:collection-hooks@0.7.3"], ["client", "server"],{weak:true});
