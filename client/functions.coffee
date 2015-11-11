@@ -1,12 +1,32 @@
 Cloudinary =
 	collection: new Mongo.Collection "_cloudinary", connection:null
+	_private_urls:{}
 	_helpers:
 		"url": (public_id,options) ->
 			if public_id and not _.isEmpty public_id
 				$.cloudinary.url(public_id,options.hash)
 
-	delete: (public_id, callback) ->
-		Meteor.call "c.delete_by_public_id", public_id, (error,result) ->
+		"private_url":(public_id,options) ->
+			private_url = Cloudinary._private_urls[public_id]
+			if not private_url
+				Cloudinary._private_urls[public_id] = new ReactiveVar ""
+				private_url = Cloudinary._private_urls[public_id]
+
+			if public_id and not _.isEmpty(public_id) and _.isEmpty(private_url.get())
+				Meteor.call "c.get_private_resource",public_id,options.hash,(error,result) ->
+					if error
+						throw new Meteor.Error "Cloudinary","Failed to sign and fetch image"
+					else
+						private_url.set result
+
+			private_url.get()
+
+	delete: (public_id, type, callback) ->
+		if _.isFunction type
+			callback = type
+			type = undefined
+
+		Meteor.call "c.delete_by_public_id", public_id, type, (error,result) ->
 			if error
 				return callback and callback error, null
 			else
