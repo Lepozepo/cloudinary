@@ -78,6 +78,12 @@ Obs: If you want to resize your image in a smaller size you will need to pass th
 For more information see the cloudinary's documentation:
 [http://cloudinary.com/documentation/image_transformations#crop_modes](http://cloudinary.com/documentation/image_transformations#crop_modes)
 
+## How to protect your images
+You will need an **Advanced Cloudinary** account before you can make your images fully private. Once you have your account you can do one of 2 things:
+
+- Set up a custom CNAME and ask Cloudinary to whitelist your domains via email
+- Upload `type:"authenticated"` images and request them via cloudinary's authentication scheme (I'm working on simplifying this part)
+
 ## Compatibility
 You can use the collection-hooks package to hook up to the offline collection `Cloudinary.collection`.
 
@@ -100,6 +106,10 @@ Template.yourtemplate.events
 ## Notes
 A security filter is missing, I know how I want it to work I just haven't had the time to build it. Enjoy the new version!
 
+### Donations - Thank You's
+**If you prefer I list your github account let me know [who you are](https://github.com/Lepozepo/cloudinary/issues/56)!**
+
+- Casey R.
 
 
 
