@@ -1,7 +1,7 @@
 Cloudinary.config
-	cloud_name: 'tester',
-	api_key: '587479331685648',
-	api_secret: 'nHsp7LpvYHUAcTxLrRow_MdizLM'
+	cloud_name: 'cloud_name',
+	api_key: 'api_key',
+	api_secret: 'api_secret'
 
 Cloudinary.rules.delete = ->
 	console.log @userId
