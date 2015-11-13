@@ -44,6 +44,9 @@ Meteor.methods
 			sign_url:true
 			type:"private"
 
+		check public_id, String
+		check ops, Object
+
 		if Cloudinary.rules.private_resource
 			auth_function = _.bind Cloudinary.rules.private_resource,this
 			if not auth_function()
