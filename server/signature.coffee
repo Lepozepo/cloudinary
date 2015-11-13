@@ -3,6 +3,11 @@ Future = Npm.require "fibers/future"
 Meteor.methods
 	"c.sign": (ops={}) ->
 		@unblock()
+		if Cloudinary.rules.signature
+			auth_function = _.bind Cloudinary.rules.signature,this
+			if not auth_function()
+				throw new Meteor.Error "Unauthorized", "Signature not allowed"
+
 		check ops, Object
 
 		# Need to add some way to do custom auth
@@ -38,6 +43,12 @@ Meteor.methods
 		_.extend ops,
 			sign_url:true
 			type:"private"
+
+		if Cloudinary.rules.private_resource
+			auth_function = _.bind Cloudinary.rules.private_resource,this
+			if not auth_function()
+				throw new Meteor.Error "Unauthorized", "Access not allowed"
+
 
 		Cloudinary.url public_id,ops
 
