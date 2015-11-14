@@ -55,3 +55,19 @@ Meteor.methods
 
 		Cloudinary.url public_id,ops
 
+	"c.get_download_url": (public_id,format,ops={}) ->
+		@unblock()
+
+		check public_id, String
+		check format, String
+		check ops, Object
+
+		if Cloudinary.rules.download_url
+			auth_function = _.bind Cloudinary.rules.download_url,this
+			if not auth_function()
+				throw new Meteor.Error "Unauthorized", "Access not allowed"
+
+		Cloudinary.utils.private_download_url public_id,format,ops
+
+
+
