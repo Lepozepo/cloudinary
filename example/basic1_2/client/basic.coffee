@@ -2,7 +2,6 @@ $.cloudinary.config
 	cloud_name: 'cloud_name'
 	api_key: 'api_key'
 
-
 Template.tester.events
 	"change input.file_bag": (e) ->
 		files = e.currentTarget.files
@@ -15,6 +14,7 @@ Template.tester.events
 				console.log err
 				console.log "Upload Result:"
 				console.log res
+				Images.insert res
 
 	"click button.delete": ->
 		Cloudinary.delete @response.public_id, (err,res) ->
@@ -33,6 +33,9 @@ Template.tester.events
 Template.tester.helpers
 	"files": ->
 		Cloudinary.collection.find()
+
+	"uploaded_images": ->
+		Images.find()
 
 	"complete": ->
 		@status is "complete"
