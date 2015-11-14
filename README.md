@@ -6,15 +6,14 @@ Star my code in github or atmosphere if you like my code or shoot me a dollar or
 
 [DONATE HERE](https://cash.me/$lepozepo)
 
-## BREAKING CHANGES
-`{{#c_upload}}` does not exist anymore
-All core methods and functions have been renamed and rewritten
+## New Features
+- Signed URLs: You can now easily generate a signed url for resources with transformations.
+- More Auth Rules: You can now control who can do what easier with the Cloudinary.rules object.
+- Improved Uploads: The method for signatures has been improved and now also allows private and authenticated images.
+- Download URLs: You can now easily generate temporary download URLs with Meteor.call("c.get_download_url", public_id,format,ops,callback)
 
-This package does not use Streams anymore and uploads directly from the client to cloudinary!
-
-
-## NEW FEATURE
-CLIENT TO CLOUDINARY UPLOADS! Images will not stream to your server anymore, they will stream directly to cloudinary.
+## Previous Features
+- Client to Cloudinary Uploads
 
 ## Installation
 
@@ -33,7 +32,17 @@ Cloudinary.config
 	api_key: '1237419'
 	api_secret: 'asdf24adsfjk'
 
+# Rules are all optional
 Cloudinary.rules.delete = ->
+	@userId is "my_user_id" # The rule must return true to pass validation, if you do not set a rule, the validation will always pass
+
+Cloudinary.rules.signature = -> # This one checks whether the user is allowed to upload or not
+	@userId is "my_user_id" # The rule must return true to pass validation, if you do not set a rule, the validation will always pass
+
+Cloudinary.rules.private_resource = ->
+	@userId is "my_user_id" # The rule must return true to pass validation, if you do not set a rule, the validation will always pass
+
+Cloudinary.rules.download_url = ->
 	@userId is "my_user_id" # The rule must return true to pass validation, if you do not set a rule, the validation will always pass
 
 #CLIENT
@@ -52,6 +61,7 @@ Template.yourtemplate.events
 
 		Cloudinary.upload files,
 			folder:"secret" # optional parameters described in http://cloudinary.com/documentation/upload_images#remote_upload
+			type:"private" # optional: makes the image accessible only via a signed url. The signed url is available publicly for 1 hour.
 			(err,res) -> #optional callback, you can catch with the Cloudinary collection as well
 				console.log "Upload Error: #{err}"
 				console.log "Upload Result: #{res}"
@@ -60,15 +70,16 @@ Template.yourtemplate.events
 
 
 ## How to read and manipulate
-All of Cloudinary's manipulation options are available in the c.url helper. You can access an image by passing a cloudinary public_id and format:
+All of Cloudinary's manipulation options are available in the c.url helper. You can access an image by passing a cloudinary public_id:
 
 ``` handlebars
-<img src="{{c.url public_id format=format}}">
+<img src="{{c.url public_id}}">
+<img src="{{c.private_url public_id}}">
 ```
 
 You can manipulate an image by adding parameters to the helper
 ``` handlebars
-<img width="250" src="{{c.url public_id format=format effect='blur:300' angle=10}}">
+<img width="250" src="{{c.url public_id effect='blur:300' angle=10}}">
 ```
 
 Obs: If you want to resize your image in a smaller size you will need to pass the `crop` parameter 
@@ -102,15 +113,42 @@ Template.yourtemplate.events
 			console.log "Upload Result: #{res}"
 ```
 
+## How to generate a downloadable link
+``` coffeescript
+Meteor.call "c.get_download_url", public_id,format,(err,download_url) ->
+	console.log "Upload Error: #{err}"
+	console.log "#{download_url}"
+```
+
+### API
+- Cloudinary.config(options) **(SERVER)** __required__:
+	- cloud_name: Name of your cloud
+	- api_key: Your Cloudinary API Key
+	- api_secret: Your Cloudinary API Secret
+
+- Cloudinary.rules **(SERVER)** __optional__: This is a javascript object of rules as functions
+	- Cloudinary.rules.delete: Checks whether deleting a resource is allowed. Return true to allow the action.
+	- Cloudinary.rules.signature: Checks whether uploading a resource is allowed. Return true to allow the action.
+	- Cloudinary.rules.private_resource: Checks whether getting a private resource is allowed. Return true to allow the action.
+	- Cloudinary.rules.download_url: Checks whether fetching a download link for a resource is allowed. Return true to allow the action.
+
+### Helpers
+- {{c.url public_id options}}: Generates a url
+	- public_id: The public ID returned after uploading a resource
+	- options: A set of transformations described here [http://cloudinary.com/documentation/image_transformations#reference](http://cloudinary.com/documentation/image_transformations#reference)
+
+- {{c.private_url public_id options}}: Generates a signed url
+	- public_id: The public ID returned after uploading a resource
+	- options: A set of transformations described here [http://cloudinary.com/documentation/image_transformations#reference](http://cloudinary.com/documentation/image_transformations#reference)
 
 ## Notes
 A security filter is missing, I know how I want it to work I just haven't had the time to build it. Enjoy the new version!
 
-### Donations - Thank You's
+### Donations and Sponsors - Thank You's
 **If you prefer I list your github account let me know [who you are](https://github.com/Lepozepo/cloudinary/issues/56)!**
 
 - Casey R.
-
+- NetLive IT
 
 
 
