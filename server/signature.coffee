@@ -55,11 +55,10 @@ Meteor.methods
 
 		Cloudinary.url public_id,ops
 
-	"c.get_download_url": (public_id,format,ops={}) ->
+	"c.get_download_url": (public_id,ops={}) ->
 		@unblock()
 
 		check public_id, String
-		check format, String
 		check ops, Object
 
 		if Cloudinary.rules.download_url
@@ -67,7 +66,9 @@ Meteor.methods
 			if not auth_function()
 				throw new Meteor.Error "Unauthorized", "Access not allowed"
 
-		Cloudinary.utils.private_download_url public_id,format,ops
+		format = ops.format or ""
+
+		Cloudinary.utils.private_download_url public_id,format,_.omit(ops,"format")
 
 
 

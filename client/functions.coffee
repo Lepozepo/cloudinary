@@ -1,6 +1,7 @@
 Cloudinary =
 	collection: new Mongo.Collection "_cloudinary", connection:null
 	_private_urls:{}
+	_expiring_urls:{}
 	_helpers:
 		"url": (public_id,options) ->
 			if public_id and not _.isEmpty public_id
@@ -20,6 +21,25 @@ Cloudinary =
 						private_url.set result
 
 			private_url.get()
+
+		"expiring_url":(public_id,options) ->
+			expiring_url = Cloudinary._expiring_urls[public_id]
+			if not expiring_url
+				Cloudinary._expiring_urls[public_id] = new ReactiveVar ""
+				expiring_url = Cloudinary._expiring_urls[public_id]
+				Meteor.setTimeout ->
+						delete Cloudinary._expiring_urls[public_id]
+					,3600000
+
+			if public_id and not _.isEmpty(public_id) and _.isEmpty(expiring_url.get())
+				Meteor.call "c.get_download_url",public_id,options.hash,(error,result) ->
+					if error
+						throw new Meteor.Error "Cloudinary","Failed to sign and fetch image"
+					else
+						expiring_url.set result
+
+			expiring_url.get()
+
 
 	delete: (public_id, type, callback) ->
 		if _.isFunction type
