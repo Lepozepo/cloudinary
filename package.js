@@ -1,7 +1,7 @@
 Package.describe({
 	name:"lepozepo:cloudinary",
 	summary: "Upload files to Cloudinary",
-	version:"4.1.0",
+	version:"4.1.1",
 	git:"https://github.com/Lepozepo/cloudinary"
 });
 
