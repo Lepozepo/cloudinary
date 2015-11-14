@@ -13,7 +13,7 @@ Package.on_use(function (api){
 	api.versionsFrom('METEOR@1.0');
 
 	// Core Packages
-	api.use(["meteor-base","coffeescript","mongo"], ["client", "server"]);
+	api.use(["meteor-base@1.0.1","coffeescript","mongo"], ["client", "server"]);
 	api.use(["templating"], "client");
 	api.use(["check","random","reactive-var"], ["client","server"]);
 
