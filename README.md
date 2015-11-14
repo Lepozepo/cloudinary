@@ -8,9 +8,10 @@ Star my code in github or atmosphere if you like my code or shoot me a dollar or
 
 ## New Features
 - Signed URLs: You can now easily generate a signed url for resources with transformations.
+- Expiring URLs: You can now easily generate signed expiring urls for raw resources.
 - More Auth Rules: You can now control who can do what easier with the Cloudinary.rules object.
 - Improved Uploads: The method for signatures has been improved and now also allows private and authenticated images.
-- Download URLs: You can now easily generate temporary download URLs with Meteor.call("c.get_download_url", public_id,format,ops,callback)
+- Download URLs: You can now easily generate temporary download URLs with Meteor.call("c.get_download_url", public_id,ops,callback)
 
 ## Previous Features
 - Client to Cloudinary Uploads
@@ -115,7 +116,7 @@ Template.yourtemplate.events
 
 ## How to generate a downloadable link
 ``` coffeescript
-Meteor.call "c.get_download_url", public_id,format,(err,download_url) ->
+Meteor.call "c.get_download_url", public_id,(err,download_url) ->
 	console.log "Upload Error: #{err}"
 	console.log "#{download_url}"
 ```
@@ -141,6 +142,10 @@ Meteor.call "c.get_download_url", public_id,format,(err,download_url) ->
 	- public_id: The public ID returned after uploading a resource
 	- options: A set of transformations described here [http://cloudinary.com/documentation/image_transformations#reference](http://cloudinary.com/documentation/image_transformations#reference)
 
+- {{c.expiring_url public_id}}: Generates a url that will expire in 1 hour, does not take any transformations
+	- public_id: The public ID returned after uploading a resource
+
+
 ## Notes
 A security filter is missing, I know how I want it to work I just haven't had the time to build it. Enjoy the new version!
 
@@ -149,6 +154,7 @@ A security filter is missing, I know how I want it to work I just haven't had th
 
 - Casey R.
 - NetLive IT
+
 
 
 
