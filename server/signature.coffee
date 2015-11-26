@@ -19,13 +19,15 @@ Meteor.methods
 
 	"c.delete_by_public_id": (public_id,type) ->
 		@unblock()
+		check public_id, String
+		check type, Match.OneOf(String,undefined,null)
+
 		if Cloudinary.rules.delete
+			@public_id = public_id
 			auth_function = _.bind Cloudinary.rules.delete,this
 			if not auth_function()
 				throw new Meteor.Error "Unauthorized", "Delete not allowed"
 
-		check public_id, String
-		check type, Match.OneOf(String,undefined,null)
 		if type
 			ops =
 				type:type
@@ -48,6 +50,7 @@ Meteor.methods
 		check ops, Object
 
 		if Cloudinary.rules.private_resource
+			@public_id = public_id
 			auth_function = _.bind Cloudinary.rules.private_resource,this
 			if not auth_function()
 				throw new Meteor.Error "Unauthorized", "Access not allowed"
@@ -62,6 +65,7 @@ Meteor.methods
 		check ops, Object
 
 		if Cloudinary.rules.download_url
+			@public_id = public_id
 			auth_function = _.bind Cloudinary.rules.download_url,this
 			if not auth_function()
 				throw new Meteor.Error "Unauthorized", "Access not allowed"

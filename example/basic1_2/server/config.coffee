@@ -6,6 +6,7 @@ Cloudinary.config
 Cloudinary.rules.delete = ->
 	# Return true to allow delete
 	console.log @userId
+	console.log @public_id
 	return true
 
 Cloudinary.rules.signature = ->
