@@ -17,14 +17,14 @@ Template.tester.events
 				Images.insert res
 
 	"click button.delete": ->
-		Cloudinary.delete @response.public_id, (err,res) ->
+		Cloudinary.delete @public_id, (err,res) ->
 			console.log "Upload Error:"
 			console.log err
 			console.log "Upload Result:"
 			console.log res
 
 	"click button.delete_private": ->
-		Cloudinary.delete @response.public_id, "private", (err,res) ->
+		Cloudinary.delete @public_id, "private", (err,res) ->
 			console.log "Upload Error:"
 			console.log err
 			console.log "Upload Result:"

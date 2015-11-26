@@ -2,6 +2,7 @@ Cloudinary =
 	collection: new Mongo.Collection "_cloudinary", connection:null
 	_private_urls:{}
 	_expiring_urls:{}
+	xhr:null
 	_helpers:
 		"url": (public_id,options) ->
 			if public_id and not _.isEmpty public_id
@@ -27,9 +28,6 @@ Cloudinary =
 			if not expiring_url
 				Cloudinary._expiring_urls[public_id] = new ReactiveVar ""
 				expiring_url = Cloudinary._expiring_urls[public_id]
-				Meteor.setTimeout ->
-						delete Cloudinary._expiring_urls[public_id]
-					,3600000
 
 			if public_id and not _.isEmpty(public_id) and _.isEmpty(expiring_url.get())
 				Meteor.call "c.get_download_url",public_id,options.hash,(error,result) ->
@@ -78,9 +76,9 @@ Cloudinary =
 				collection_id = Random.id()
 
 				# Send data
-				xhr = new XMLHttpRequest()
+				Cloudinary.xhr = new XMLHttpRequest()
 
-				xhr.upload.addEventListener "progress", (event) ->
+				Cloudinary.xhr.upload.addEventListener "progress", (event) ->
 						Cloudinary.collection.upsert _id:collection_id,
 							$set:
 								status:"uploading"
@@ -89,8 +87,8 @@ Cloudinary =
 								percent_uploaded: Math.floor ((event.loaded / event.total) * 100)
 					,false
 
-				xhr.addEventListener "load", ->
-					if xhr.status < 400
+				Cloudinary.xhr.addEventListener "load", ->
+					if Cloudinary.xhr.status < 400
 						response = JSON.parse @response
 						Cloudinary.collection.upsert collection_id,
 							$set:
@@ -108,7 +106,7 @@ Cloudinary =
 
 						callback and callback response,null
 
-				xhr.addEventListener "error", ->
+				Cloudinary.xhr.addEventListener "error", ->
 					response = JSON.parse @response
 					Cloudinary.collection.upsert collection_id,
 						$set:
@@ -117,14 +115,14 @@ Cloudinary =
 
 					callback and callback response,null
 
-				xhr.addEventListener "abort", ->
+				Cloudinary.xhr.addEventListener "abort", ->
 					Cloudinary.collection.upsert collection_id,
 						$set:
 							status:"aborted"
 
-				xhr.open "POST",result.form_attrs.action,true
+				Cloudinary.xhr.open "POST",result.form_attrs.action,true
 
-				xhr.send form_data
+				Cloudinary.xhr.send form_data
 
 			else
 				return callback and callback error,null
@@ -133,14 +131,3 @@ Cloudinary =
 # Define helpers
 Template.registerHelper "c", ->
 	Cloudinary._helpers
-
-
-
-
-
-
-
-
-
-
-
