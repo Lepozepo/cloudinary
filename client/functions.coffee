@@ -2,7 +2,7 @@ Cloudinary =
 	collection: new Mongo.Collection "_cloudinary", connection:null
 	_private_urls:{}
 	_expiring_urls:{}
- xhr:null
+	xhr:null
 	_helpers:
 		"url": (public_id,options) ->
 			if public_id and not _.isEmpty public_id
@@ -28,9 +28,6 @@ Cloudinary =
 			if not expiring_url
 				Cloudinary._expiring_urls[public_id] = new ReactiveVar ""
 				expiring_url = Cloudinary._expiring_urls[public_id]
-				Meteor.setTimeout ->
-						delete Cloudinary._expiring_urls[public_id]
-					,3600000
 
 			if public_id and not _.isEmpty(public_id) and _.isEmpty(expiring_url.get())
 				Meteor.call "c.get_download_url",public_id,options.hash,(error,result) ->
