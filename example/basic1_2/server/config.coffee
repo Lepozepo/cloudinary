@@ -24,6 +24,4 @@ Cloudinary.rules.download_url = ->
 	console.log @userId
 	return true
 
-# 10:20AM
-# https://res.cloudinary.com/tester/image/private/s--UxjdiNr9--/v1447517971/secret/kuhbdw2ynsj4lzgde3qx.jpg
 
