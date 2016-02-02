@@ -11,6 +11,7 @@ Cloudinary.rules.delete = ->
 
 Cloudinary.rules.signature = ->
 	# Return true to allow upload
+	console.log @options # Options passed through the uploader
 	console.log @userId
 	return true
 

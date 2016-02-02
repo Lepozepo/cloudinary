@@ -4,6 +4,7 @@ Meteor.methods
 	"c.sign": (ops={}) ->
 		@unblock()
 		if Cloudinary.rules.signature
+			@options = ops
 			auth_function = _.bind Cloudinary.rules.signature,this
 			if not auth_function()
 				throw new Meteor.Error "Unauthorized", "Signature not allowed"
