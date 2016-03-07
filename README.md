@@ -99,6 +99,8 @@ You will need an **Advanced Cloudinary** account before you can make your images
 ## Compatibility
 You can use the collection-hooks package to hook up to the offline collection `Cloudinary.collection`.
 
+If you are using the `browser-policy` package, don't forget to allow images from cloudinary to load on your webapp by using `BrowserPolicy.content.allowImageOrigin("res.cloudinary.com")`
+
 Here are all the transformations you can apply:
 [http://cloudinary.com/documentation/image_transformations#reference](http://cloudinary.com/documentation/image_transformations#reference)
 
