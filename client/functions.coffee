@@ -85,6 +85,7 @@ Cloudinary =
 								loaded:event.loaded
 								total:event.total
 								percent_uploaded: Math.floor ((event.loaded / event.total) * 100)
+								preview: file
 					,false
 
 				Cloudinary.xhr.addEventListener "load", ->
