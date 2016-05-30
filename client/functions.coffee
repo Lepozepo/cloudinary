@@ -78,14 +78,20 @@ Cloudinary =
 				# Send data
 				Cloudinary.xhr = new XMLHttpRequest()
 
+				# Set fields
+				fields = _.extend ops.fields,
+					_id: collection_id
+					status: 'uploading'
+					preview: file
+
+				Cloudinary.collection.insert fields						
+
 				Cloudinary.xhr.upload.addEventListener "progress", (event) ->
-						Cloudinary.collection.upsert _id:collection_id,
+						Cloudinary.collection.update _id:collection_id,
 							$set:
-								status:"uploading"
 								loaded:event.loaded
 								total:event.total
 								percent_uploaded: Math.floor ((event.loaded / event.total) * 100)
-								preview: file
 					,false
 
 				Cloudinary.xhr.addEventListener "load", ->
