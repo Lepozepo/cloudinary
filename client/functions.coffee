@@ -79,7 +79,7 @@ Cloudinary =
 				Cloudinary.xhr = new XMLHttpRequest()
 
 				# Set fields
-				fields = _.extend ops.fields,
+				fields = _.extend ops.fields || {},
 					_id: collection_id
 					status: 'uploading'
 					preview: file
