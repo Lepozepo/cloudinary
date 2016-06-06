@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Npm.depends({
-	cloudinary: "1.2.5"
+	cloudinary: "1.3.1"
 });
 
 Package.on_use(function (api){
