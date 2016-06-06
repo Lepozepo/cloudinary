@@ -2,7 +2,6 @@ $.cloudinary.config
 	cloud_name: 'cloud_name'
 	api_key: 'api_key'
 
-
 Template.tester.events
 	"change input.file_bag": (e) ->
 		files = e.currentTarget.files
