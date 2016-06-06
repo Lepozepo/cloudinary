@@ -14,7 +14,7 @@ Package.on_use(function (api){
 	api.versionsFrom('METEOR@1.0');
 
 	// Core Packages
-	api.use(["meteor-base@1.0.1","coffeescript","mongo"], ["client", "server"]);
+	api.use(["meteor-base@1.0.1","coffeescript","mongo","underscore"], ["client", "server"]);
 	api.use(["templating"], "client");
 	api.imply(["check","random","reactive-var"], ["client","server"]);
 
