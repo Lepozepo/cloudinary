@@ -1,7 +1,7 @@
 Package.describe({
 	name:"lepozepo:cloudinary",
 	summary: "Upload files to Cloudinary",
-	version:"4.2.0",
+	version:"4.2.1",
 	git:"https://github.com/Lepozepo/cloudinary"
 });
 
@@ -31,7 +31,5 @@ Package.on_use(function (api){
 	api.add_files("client/functions.coffee", "client");
 
 	api.export && api.export("Cloudinary",["server","client"]);
-	api.export && api.export("lilcloudinary", ["client"]);
-
 });
 
