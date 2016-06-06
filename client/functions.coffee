@@ -78,13 +78,10 @@ Cloudinary =
 				# Send data
 				Cloudinary.xhr = new XMLHttpRequest()
 
-				# Set fields
-				fields = _.extend ops.fields || {},
-					_id: collection_id
-					status: 'uploading'
-					preview: file
-
-				Cloudinary.collection.insert fields						
+				Cloudinary.collection.insert
+					_id:collection_id
+					status:"uploading"
+					preview:file
 
 				Cloudinary.xhr.upload.addEventListener "progress", (event) ->
 						Cloudinary.collection.update _id:collection_id,
