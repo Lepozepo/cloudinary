@@ -2,14 +2,14 @@ Future = Npm.require "fibers/future"
 
 Meteor.methods
 	"c.sign": (ops={}) ->
+		check ops, Match.Maybe(Object)
 		@unblock()
+
 		if Cloudinary.rules.signature
 			@options = ops
 			auth_function = _.bind Cloudinary.rules.signature,this
 			if not auth_function()
 				throw new Meteor.Error "Unauthorized", "Signature not allowed"
-
-		check ops, Object
 
 		# Need to add some way to do custom auth
 		# signature = Cloudinary.utils.sign_request ops
@@ -19,9 +19,9 @@ Meteor.methods
 
 
 	"c.delete_by_public_id": (public_id,type) ->
-		@unblock()
 		check public_id, String
 		check type, Match.OneOf(String,undefined,null)
+		@unblock()
 
 		if Cloudinary.rules.delete
 			@public_id = public_id
@@ -42,13 +42,13 @@ Meteor.methods
 		return future.wait()
 
 	"c.get_private_resource": (public_id,ops={}) ->
+		check public_id, String
+		check ops, Match.Maybe(Object)
 		@unblock()
+
 		_.extend ops,
 			sign_url:true
 			type:"private"
-
-		check public_id, String
-		check ops, Object
 
 		if Cloudinary.rules.private_resource
 			@public_id = public_id
@@ -60,10 +60,9 @@ Meteor.methods
 		Cloudinary.url public_id,ops
 
 	"c.get_download_url": (public_id,ops={}) ->
-		@unblock()
-
 		check public_id, String
-		check ops, Object
+		check ops, Match.Maybe(Object)
+		@unblock()
 
 		if Cloudinary.rules.download_url
 			@public_id = public_id

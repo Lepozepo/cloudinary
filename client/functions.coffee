@@ -68,10 +68,6 @@ Cloudinary =
 
 	_upload_file: (file, ops={}, callback) ->
 		Meteor.call "c.sign", ops, (error,result) ->
-			console.log error
-			console.log result
-			console.log callback
-
 			if error
 				return callback and callback error,null
 
