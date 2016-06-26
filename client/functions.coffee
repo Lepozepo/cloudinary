@@ -54,6 +54,10 @@ Cloudinary =
 					return callback and callback null,result
 
 	upload: (files, ops={}, callback) ->
+		if _.isFunction ops
+			callback = ops
+			ops = {}
+
 		_.each files, (file) ->
 			reader = new FileReader
 
@@ -64,53 +68,50 @@ Cloudinary =
 
 	_upload_file: (file, ops={}, callback) ->
 		Meteor.call "c.sign", ops, (error,result) ->
-			if not error
-				# Build form
-				form_data = new FormData()
-				_.each result.hidden_fields, (v,k) ->
-					form_data.append k,v
+			console.log error
+			console.log result
+			console.log callback
 
-				form_data.append "file",file
+			if error
+				return callback and callback error,null
 
-				# Create collection document ID
-				collection_id = Random.id()
+			# Build form
+			form_data = new FormData()
+			_.each result.hidden_fields, (v,k) ->
+				form_data.append k,v
 
-				# Send data
-				Cloudinary.xhr = new XMLHttpRequest()
+			form_data.append "file",file
 
-				Cloudinary.collection.insert
-					_id:collection_id
-					status:"uploading"
-					preview:file
+			# Create collection document ID
+			collection_id = Random.id()
 
-				Cloudinary.xhr.upload.addEventListener "progress", (event) ->
-						Cloudinary.collection.update _id:collection_id,
-							$set:
-								loaded:event.loaded
-								total:event.total
-								percent_uploaded: Math.floor ((event.loaded / event.total) * 100)
-					,false
+			# Send data
+			Cloudinary.xhr = new XMLHttpRequest()
 
-				Cloudinary.xhr.addEventListener "load", ->
-					if Cloudinary.xhr.status < 400
-						response = JSON.parse @response
-						Cloudinary.collection.upsert collection_id,
-							$set:
-								status:"complete"
-								percent_uploaded: 100
-								response: response
+			Cloudinary.collection.insert
+				_id:collection_id
+				status:"uploading"
+				preview:file
 
-						callback and callback null,response
-					else
-						response = JSON.parse @response
-						Cloudinary.collection.upsert collection_id,
-							$set:
-								status:"error"
-								response: response
+			Cloudinary.xhr.upload.addEventListener "progress", (event) ->
+					Cloudinary.collection.update _id:collection_id,
+						$set:
+							loaded:event.loaded
+							total:event.total
+							percent_uploaded: Math.floor ((event.loaded / event.total) * 100)
+				,false
 
-						callback and callback response,null
+			Cloudinary.xhr.addEventListener "load", ->
+				if Cloudinary.xhr.status < 400
+					response = JSON.parse @response
+					Cloudinary.collection.upsert collection_id,
+						$set:
+							status:"complete"
+							percent_uploaded: 100
+							response: response
 
-				Cloudinary.xhr.addEventListener "error", ->
+					callback and callback null,response
+				else
 					response = JSON.parse @response
 					Cloudinary.collection.upsert collection_id,
 						$set:
@@ -119,17 +120,23 @@ Cloudinary =
 
 					callback and callback response,null
 
-				Cloudinary.xhr.addEventListener "abort", ->
-					Cloudinary.collection.upsert collection_id,
-						$set:
-							status:"aborted"
+			Cloudinary.xhr.addEventListener "error", ->
+				response = JSON.parse @response
+				Cloudinary.collection.upsert collection_id,
+					$set:
+						status:"error"
+						response: response
 
-				Cloudinary.xhr.open "POST",result.form_attrs.action,true
+				callback and callback response,null
 
-				Cloudinary.xhr.send form_data
+			Cloudinary.xhr.addEventListener "abort", ->
+				Cloudinary.collection.upsert collection_id,
+					$set:
+						status:"aborted"
 
-			else
-				return callback and callback error,null
+			Cloudinary.xhr.open "POST",result.form_attrs.action,true
+
+			Cloudinary.xhr.send form_data
 
 
 # Define helpers
