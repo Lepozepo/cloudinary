@@ -2,7 +2,7 @@ Future = Npm.require "fibers/future"
 
 Meteor.methods
 	"c.sign": (ops={}) ->
-		check ops, Match.Maybe(Object)
+		check ops, Match.Optional(Object)
 		@unblock()
 
 		if Cloudinary.rules.signature
@@ -43,7 +43,7 @@ Meteor.methods
 
 	"c.get_private_resource": (public_id,ops={}) ->
 		check public_id, String
-		check ops, Match.Maybe(Object)
+		check ops, Match.Optional(Object)
 		@unblock()
 
 		_.extend ops,
@@ -61,7 +61,7 @@ Meteor.methods
 
 	"c.get_download_url": (public_id,ops={}) ->
 		check public_id, String
-		check ops, Match.Maybe(Object)
+		check ops, Match.Optional(Object)
 		@unblock()
 
 		if Cloudinary.rules.download_url
