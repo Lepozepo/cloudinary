@@ -58,6 +58,15 @@ Cloudinary =
 			callback = ops
 			ops = {}
 
+		if not _.isArray files
+			file = files
+			reader = new FileReader
+
+			reader.onload = ->
+				Cloudinary._upload_file reader.result, ops, callback
+
+			return reader.readAsDataURL file
+
 		_.each files, (file) ->
 			reader = new FileReader
 
