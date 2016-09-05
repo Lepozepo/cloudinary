@@ -28,7 +28,7 @@ htmljs@1.0.10
 http@1.1.7
 id-map@1.0.8
 jquery@1.11.9
-lepozepo:cloudinary@4.2.5
+lepozepo:cloudinary@4.2.6
 livedata@1.0.18
 logging@1.0.13_1
 meteor@1.1.15_1
