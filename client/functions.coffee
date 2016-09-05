@@ -58,7 +58,7 @@ Cloudinary =
 			callback = ops
 			ops = {}
 
-		if not _.isArray files
+		if files instanceof File or files instanceof Blob
 			file = files
 			reader = new FileReader
 
@@ -67,13 +67,14 @@ Cloudinary =
 
 			return reader.readAsDataURL file
 
-		_.each files, (file) ->
-			reader = new FileReader
+		if files instanceof FileList
+			_.each files, (file) ->
+				reader = new FileReader
 
-			reader.onload = ->
-				Cloudinary._upload_file reader.result, ops, callback
+				reader.onload = ->
+					Cloudinary._upload_file reader.result, ops, callback
 
-			reader.readAsDataURL file
+				reader.readAsDataURL file
 
 	_upload_file: (file, ops={}, callback) ->
 		Meteor.call "c.sign", ops, (error,result) ->
