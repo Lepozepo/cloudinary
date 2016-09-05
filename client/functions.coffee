@@ -67,7 +67,7 @@ Cloudinary =
 
 			return reader.readAsDataURL file
 
-		if files instanceof FileList
+		if _.isArray(files) or files instanceof FileList
 			_.each files, (file) ->
 				reader = new FileReader
 
