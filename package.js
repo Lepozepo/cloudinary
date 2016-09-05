@@ -16,10 +16,10 @@ Package.on_use(function (api){
 	// Core Packages
 	api.use(["meteor-base@1.0.1","coffeescript","mongo","underscore"], ["client", "server"]);
 	api.use(["templating"], "client");
-	api.use(["check","random","reactive-var","audit-argument-checks"], ["client","server"]);
+	api.use(["check","random","reactive-var"], ["client","server"]);
 
 	// External Packages
-	api.use(["matb33:collection-hooks@0.7.3"], ["client", "server"],{weak:true});
+	api.use(["matb33:collection-hooks@0.7.3","audit-argument-checks"], ["client", "server"],{weak:true});
 
 	// Cloudinary Client Side
 	api.add_files(".npm/package/node_modules/cloudinary-jquery/cloudinary-jquery.min.js","client");
