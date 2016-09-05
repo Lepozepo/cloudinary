@@ -164,6 +164,7 @@ A security filter is missing, I know how I want it to work I just haven't had th
 **If you prefer I list your github account let me know [who you are](https://github.com/Lepozepo/cloudinary/issues/56)!**
 
 - Casey R.
+- David M.
 - NetLive IT
 
 
