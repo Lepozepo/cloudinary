@@ -9,7 +9,6 @@ coffeescript@1.2.4_1
 lepozepo:cloudinary
 
 mquandalle:jade
-audit-argument-checks@1.0.7
 accounts-ui@1.1.9
 accounts-password@1.3.0
 standard-app-packages@1.0.9
