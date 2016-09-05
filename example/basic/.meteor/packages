@@ -5,13 +5,14 @@
 
 autopublish@1.0.7
 insecure@1.0.7
-coffeescript@1.2.3
+coffeescript@1.2.4_1
 lepozepo:cloudinary
 
 mquandalle:jade
 audit-argument-checks@1.0.7
 accounts-ui@1.1.9
-accounts-password@1.2.12
+accounts-password@1.3.0
 standard-app-packages@1.0.9
-standard-minifier-css@1.1.8
-standard-minifier-js@1.1.8
+standard-minifier-css@1.2.0
+standard-minifier-js@1.2.0
+shell-server
