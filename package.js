@@ -6,8 +6,8 @@ Package.describe({
 });
 
 Npm.depends({
-	cloudinary: "1.3.1",
-	"cloudinary-jquery": "2.0.9"
+	cloudinary: "1.9.0",
+	"cloudinary-jquery": "2.3.0"
 });
 
 Package.on_use(function (api){
