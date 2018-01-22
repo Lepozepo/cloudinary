@@ -1,4 +1,7 @@
-Future = Npm.require "fibers/future"
+import Cloudinary from 'cloudinary'
+import Future from 'fibers/future'
+
+Cloudinary.rules = {}
 
 Meteor.methods
 	"c.sign": (ops={}) ->
@@ -74,5 +77,5 @@ Meteor.methods
 
 		Cloudinary.utils.private_download_url public_id,format,_.omit(ops,"format")
 
-
+export { Cloudinary }
 

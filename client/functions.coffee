@@ -148,3 +148,5 @@ Cloudinary =
 # Define helpers
 Template.registerHelper "c", ->
 	Cloudinary._helpers
+
+export { Cloudinary }

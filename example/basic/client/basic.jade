@@ -1,25 +1,37 @@
 head
-	title basic
+  title basic
 
 body
-	+tester
+  +tester
 
 
 template(name="tester")
-	h3 Cloudinary Upload
+  h3 Cloudinary Upload
 
-	+loginButtons
+  +loginButtons
 
-	br
-	input.file_bag(type="file")
+  br
+  input.file_bag(type="file")
 
-	h5 uploaded files
-	each files
-		p {{percent_uploaded}} %
-		p {{response.public_id}}
-		if complete
-			img(src="{{c.url response.public_id effect='blur:300' angle=10}}")
+  h5 uploaded files
+  each uploaded_images
+    img(src="{{c.url public_id effect='blur:300' angle=10}}")
+    img(src="{{c.private_url public_id effect='blur:300' angle=10}}")
+    img(src="{{c.expiring_url public_id}}")
 
-		p {{status}}
+    button.delete Delete
+    button.delete_private Delete Private
 
-		button.delete Delete
+  //- each files
+  //-   p {{percent_uploaded}} %
+  //-   p {{response.public_id}}
+  //-   if complete
+  //-     img(src="{{c.url response.public_id effect='blur:300' angle=10}}")
+  //-     img(src="{{c.private_url response.public_id effect='blur:300' angle=10}}")
+  //-     img(src="{{c.expiring_url response.public_id format='jpg' effect='blur:300' angle=10}}")
+
+  //-   button.delete Delete
+  //-   button.delete_private Delete Private
+
+
+//- Expiring images expire in 1 hour

@@ -1,0 +1,11 @@
+{
+  "name": "basic3",
+  "private": true,
+  "scripts": {
+    "start": "meteor run --settings settings.json"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "meteor-node-stubs": "^0.3.2"
+  }
+}
